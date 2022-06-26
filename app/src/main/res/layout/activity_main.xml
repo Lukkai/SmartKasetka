@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <!--    android:background="#C0FFAD"-->
-    <!--    android:orientation="vertical"-->
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,12 +21,6 @@
             android:gravity="center"
             android:textColor="@color/teal_200"/>
 
-        <!--            android:background="@android:color/holo_green_light"-->
-        <!--            android:fontFamily="monospace"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:textAppearance="@style/TextAppearance.AppCompat.Display1"-->
-        <!--            android:textStyle="bold" -->
-        <!--            android:layout_gravity="center"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,14 +38,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
-            <!--                            android:text="@string/pillsRemain"-->
 
             <TextView
                 android:id="@+id/pillsTotalT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
-            <!--                            android:text="@string/pillsTotal"-->
 
         </LinearLayout>
 
@@ -70,7 +59,6 @@
                 android:layout_height="match_parent"
                 android:textSize="36sp"
                 android:gravity="center"/>
-            <!--                android:text="@string/events"-->
 
         </LinearLayout>
 
@@ -94,38 +82,6 @@
                 android:text="@string/program_pill" />
         </LinearLayout>
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:gravity="center"-->
-        <!--            android:orientation="horizontal">-->
-
-        <!--            <Button-->
-        <!--                android:id="@+id/pairedB"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="@string/show_paired_bt"/>-->
-        <!--        </LinearLayout>-->
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:gravity="left"-->
-        <!--            android:layout_marginHorizontal="50dp"-->
-        <!--            android:orientation="vertical">-->
-        <!--            <HorizontalScrollView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content">-->
-        <!--                <TextView-->
-        <!--                    android:id="@+id/paired"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:scrollHorizontally="true"-->
-        <!--                    android:textSize="16sp"-->
-        <!--                    android:text="@string/paired_bt"/>-->
-        <!--            </HorizontalScrollView>-->
-        <!--        </LinearLayout>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -146,82 +102,6 @@
                 android:text="@string/settings"
                 android:layout_marginTop="15dp"/>
 
-
-
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
-
-
-
-
-    <!--        <TableLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginBottom="32dp">-->
-
-    <!--            <TableRow-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="142dp">-->
-
-    <!--                <Button-->
-    <!--                    android:id="@+id/btnConnect"-->
-    <!--                    style="?android:attr/buttonBarButtonStyle"-->
-    <!--                    android:layout_width="205dp"-->
-    <!--                    android:layout_height="115dp"-->
-    <!--                    android:backgroundTint="#49815D"-->
-    <!--                    android:insetLeft="6dp"-->
-    <!--                    android:insetRight="6dp"-->
-    <!--                    android:text="@string/bt_connect"-->
-    <!--                    android:textColor="#FFFFFF"-->
-    <!--                    app:icon="@android:drawable/stat_sys_data_bluetooth"-->
-    <!--                    app:iconTint="#FFFFFF" />-->
-
-    <!--                <Button-->
-    <!--                    android:id="@+id/btnRecord"-->
-    <!--                    style="?android:attr/buttonBarButtonStyle"-->
-    <!--                    android:layout_width="205dp"-->
-    <!--                    android:layout_height="match_parent"-->
-    <!--                    android:backgroundTint="#49815D"-->
-    <!--                    android:insetLeft="6dp"-->
-    <!--                    android:insetRight="6dp"-->
-    <!--                    android:text="@string/dose_record"-->
-    <!--                    android:textColor="#FFFFFF"-->
-    <!--                    app:icon="@android:drawable/ic_menu_agenda"-->
-    <!--                    app:iconTint="#FFFFFF" />-->
-    <!--            </TableRow>-->
-
-    <!--            <TableRow-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="match_parent">-->
-
-    <!--                <Button-->
-    <!--                    android:id="@+id/btnAlarm"-->
-    <!--                    style="?android:attr/buttonBarButtonStyle"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="115dp"-->
-    <!--                    android:backgroundTint="#49815D"-->
-    <!--                    android:insetLeft="6dp"-->
-    <!--                    android:insetRight="6dp"-->
-    <!--                    android:text="@string/alarm"-->
-    <!--                    android:textColor="#FFFFFF"-->
-    <!--                    app:icon="@android:drawable/ic_menu_today"-->
-    <!--                    app:iconTint="#FFFFFF" />-->
-
-    <!--                <Button-->
-    <!--                    android:id="@+id/btnSettings"-->
-    <!--                    style="?android:attr/buttonBarButtonStyle"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="match_parent"-->
-    <!--                    android:backgroundTint="#49815D"-->
-    <!--                    android:insetLeft="6dp"-->
-    <!--                    android:insetRight="6dp"-->
-    <!--                    android:text="@string/settings"-->
-    <!--                    android:textColor="#FFFFFF"-->
-    <!--                    app:icon="@android:drawable/ic_menu_manage"-->
-    <!--                    app:iconTint="#FFFFFF"-->
-    <!--                    app:rippleColor="#300E0E" />-->
-    <!--            </TableRow>-->
-
-    <!--        </TableLayout>-->
-

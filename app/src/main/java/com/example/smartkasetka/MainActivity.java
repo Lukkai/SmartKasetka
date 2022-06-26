@@ -1,10 +1,8 @@
 package com.example.smartkasetka;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -12,6 +10,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -28,40 +27,44 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-        Button throwB, programB, sendMessageB, settingsB;
-        TextView eventT;
-        TextView pillsRemainT, pillsTotalT;
-        static final int REQUEST_ENABLE_BT = 1;
-        static final int SEND_SMS_PERMISSION_REQ=1;
-        static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-        BluetoothDevice bluetoothDevice = null;
-        BluetoothSocket btSocket = null;
-        String btAddress = null;
-        OutputStream outputStream;
-        InputStream inputStream;
-        boolean connectionStatus = true;
-        long time_hour;
-        boolean addedTime = false;
-        int pillsRemain;                //should be stored in a DB and updated with each pill throw
-        final int pillsTotal = 0;      //max pills in dispenser
-        char readSignal;                //incoming signal from esp32
+    Button throwB, programB, sendMessageB, settingsB;
+    TextView eventT;
+    TextView pillsRemainT, pillsTotalT;
+    static final int REQUEST_ENABLE_BT = 1;
+    static final int SEND_SMS_PERMISSION_REQ=1;
+    static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    BluetoothDevice bluetoothDevice = null;
+    BluetoothSocket btSocket = null;
+    String btAddress = null;
+    OutputStream outputStream;
+    InputStream inputStream;
+    boolean connectionStatus = true;
+    long time_hour;
+    boolean addedTime = false;
+    //int pillsRemain;                //should be stored in a DB and updated with each pill throw
+    final int pillsTotal = 15;      //max pills in dispenser
+    char readSignal;                //incoming signal from esp32
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
 
-            throwB = (Button) findViewById(R.id.throwB);
-            throwB = (Button) findViewById(R.id.programB);
-            sendMessageB = (Button)findViewById(R.id.sendMessageB);
-            sendMessageB.setEnabled(false);
-            settingsB = (Button)findViewById(R.id.settingsB);
-            eventT = (TextView) findViewById(R.id.eventT);
-            eventT.setText("To throw pill press button on dispenser");
-            pillsTotalT = (TextView) findViewById(R.id.pillsTotalT);
-            pillsRemainT = (TextView) findViewById(R.id.pillsRemainT);
-            pillsRemainT.setText(String.valueOf(pillsRemain));
-            pillsTotalT.setText("/" + pillsTotal);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        throwB = (Button) findViewById(R.id.throwB);
+        programB = (Button) findViewById(R.id.programB);
+        sendMessageB = (Button) findViewById(R.id.sendMessageB);
+        sendMessageB.setEnabled(false);
+        settingsB = (Button) findViewById(R.id.settingsB);
+        eventT = (TextView) findViewById(R.id.eventT);
+        eventT.setText("To throw pill press button on dispenser");
+        pillsTotalT = (TextView) findViewById(R.id.pillsTotalT);
+        pillsRemainT = (TextView) findViewById(R.id.pillsRemainT);
+        pillsTotalT.setText("/" + pillsTotal);
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("mySettings", 0);
+        Integer pillsRemain = sharedPreferences.getInt("pillsRemain", 0);
+        pillsRemainT.setText(String.valueOf(pillsRemain));
+
 
             //throw pill
             throwB.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     alarmAlertDialog();
                 }
             });
+
 
             //program dispenser
             programB.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +123,27 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onResume() {
             super.onResume();
+        }
+
+        public Integer sharedPreferencesGet()
+        {
+            SharedPreferences sharedPreferences;
+            Integer pillsRemain = null;
+            try {
+                sharedPreferences = getSharedPreferences("mySettings", MODE_PRIVATE);
+                pillsRemain = sharedPreferences.getInt("pillsRemain", 0);
+                return pillsRemain;
+            }
+            catch (ClassCastException e) {e.printStackTrace();}
+
+            return pillsRemain;
+        }
+
+        public void sharedPreferencesSet(int value){
+            SharedPreferences sharedPreferences = getSharedPreferences("mySettings", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("pillsRemain", value);
+            editor.apply();
         }
 
         public void initializeBt() {
@@ -250,6 +275,9 @@ public class MainActivity extends AppCompatActivity {
                     connectionStatus = false;
                     setStopExecution(true);
                 }
+
+                Integer pillsRemain = sharedPreferencesGet();
+
                 //boolean press_switch = false;
                 if (connectionStatus /*&& !press_switch*/) {
                     try {
@@ -258,7 +286,11 @@ public class MainActivity extends AppCompatActivity {
                             case '3': {
                                 eventT.setText("Event: Pill thrown");                                //this event is never printed because view is not updated while being in loop
                                 pillsRemain += 1;
+
+                                sharedPreferencesSet(pillsRemain);
+
                                 pillsRemainT.setText(String.valueOf(pillsRemain));
+
                                 setStopExecution(true);
                                 break;
                             }
@@ -276,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             case '6': {
                                 eventT.setText("Event: Press switch to throw pill");
-                                //setStopExecution(true);
                                 break;
                             }
                             default:
@@ -304,12 +335,14 @@ public class MainActivity extends AppCompatActivity {
             //set non cancelable
             builder.setCancelable(false);
 
+            Integer pillsRemain = sharedPreferencesGet();
+
             //on pill throw
             builder.setPositiveButton("Throw pill", new DialogInterface.OnClickListener() {
                 //throw pill
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                        if(pillsRemain>0) {
+                        if(pillsRemain<15) {
                             initializeBt();
                             connectBt();
                             if (btSocket.isConnected()) {
