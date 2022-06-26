@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SmartKasetka</string>
+    <string name="esp_pill_dispenser">Smart kasetka</string>
+    <string name="bt_connect">Połącz Bluetooth</string>
+    <string name="dose_record">Spis dawek</string>
+    <string name="alarm">Alarm</string>
+    <string name="status">Status:</string>
+    <string name="pills_remain">pozostałoTabletek</string>
+    <string name="pills_total">tabletekWCałości</string>
+    <string name="throw_pill">Wyrzuć tabletkę</string>
+    <string name="program_pill">Zaprogramuj cykl</string>
+    <string name="show_paired_bt">Pokaż sparowane urządzenia</string>
+    <string name="paired_bt">Sparowane urządzenia</string>
+    <string name="events">Zdarzenia</string>
+    <string name="settings">Ustawienia</string>
+    <string name="send_message">Wyślij wiadomość do opiekuna</string>
+    <string name="dose_planning">Planowanie dawkowania</string>
+    <string name="contact">Zapisz kontakt</string>
+    <string name="number">Numer</string>
+    <string name="message">Wiadomość</string>
+</resources>

@@ -1,5 +1,7 @@
 package com.example.smartkasetka;
 
-public class SettingsActivity extends MainActivity {
+import android.app.Activity;
+
+public class SettingsActivity extends Activity {
 
 }
